@@ -9,15 +9,4 @@ Install & Run Locally
 Build for Production
 - npm run build (outputs to dist/)
 
-Deploy
-- Netlify: build command npm run build, publish directory dist
-- Vercel: vercel, or import the repo
-- GitHub Pages: publish dist/ via gh-pages or actions
-
-Custom Domain & HTTPS
-- Point domain to host; enable automatic HTTPS in host dashboard.
-
-Replace Placeholders
-- LinkedIn/GitHub/Email/Phone in src/components/Terminal.vue
-- Replace src/assets/CV.pdf and src/assets/cookielab.console.png with your files
 

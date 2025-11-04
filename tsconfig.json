@@ -9,7 +9,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "types": ["vite/client", "vue"],
+    "types": ["vite/client", "vitest/globals", "vue", "vitest", "@vue/test-utils"],
     "skipLibCheck": true,
     "noEmit": true
   },
