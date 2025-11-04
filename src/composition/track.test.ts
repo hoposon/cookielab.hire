@@ -1,13 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { trackVisit } from './track';
 
-declare global {
-  // augment global for TypeScript
-  interface Navigator {
-    sendBeacon?: (url: string, data?: BodyInit | null) => boolean;
-  }
-}
-
 const samplePayload = { foo: 'bar' };
 
 beforeEach(() => {
@@ -16,10 +9,10 @@ beforeEach(() => {
 
 describe('trackVisit', () => {
   it('uses sendBeacon when available and successful', async () => {
-    const sendBeacon = vi.fn().mockReturnValue(true);
-    Object.defineProperty(global, 'navigator', { value: { sendBeacon }, configurable: true });
+    const sendBeacon = vi.fn<(url: string, data?: BodyInit | null) => boolean>().mockReturnValue(true);
+    Object.defineProperty(globalThis, 'navigator', { value: { sendBeacon } as unknown as Navigator, configurable: true });
 
-    const fetchSpy = vi.spyOn(global, 'fetch' as any).mockResolvedValue({ ok: true } as any);
+    const fetchSpy = vi.spyOn(globalThis as any, 'fetch').mockResolvedValue({ ok: true } as any);
 
     await trackVisit('event_beacon', samplePayload);
 
@@ -28,21 +21,21 @@ describe('trackVisit', () => {
   });
 
   it('falls back to fetch when sendBeacon is not available', async () => {
-    Object.defineProperty(global, 'navigator', { value: {}, configurable: true });
-    const fetchSpy = vi.spyOn(global, 'fetch' as any).mockResolvedValue({ ok: true } as any);
+    Object.defineProperty(globalThis, 'navigator', { value: {} as Navigator, configurable: true });
+    const fetchSpy = vi.spyOn(globalThis as any, 'fetch').mockResolvedValue({ ok: true } as any);
 
     await trackVisit('event_fetch', samplePayload);
 
     expect(fetchSpy).toHaveBeenCalledTimes(1);
-    const call = fetchSpy.mock.calls[0];
-    expect(call[1]?.keepalive).toBe(true);
+    const call = fetchSpy.mock.calls[0] as any;
+    expect((call[1] as RequestInit)?.keepalive).toBe(true);
   });
 
   it('falls back to fetch when sendBeacon returns false', async () => {
-    const sendBeacon = vi.fn().mockReturnValue(false);
-    Object.defineProperty(global, 'navigator', { value: { sendBeacon }, configurable: true });
+    const sendBeacon = vi.fn<(url: string, data?: BodyInit | null) => boolean>().mockReturnValue(false);
+    Object.defineProperty(globalThis, 'navigator', { value: { sendBeacon } as unknown as Navigator, configurable: true });
 
-    const fetchSpy = vi.spyOn(global, 'fetch' as any).mockResolvedValue({ ok: true } as any);
+    const fetchSpy = vi.spyOn(globalThis as any, 'fetch').mockResolvedValue({ ok: true } as any);
 
     await trackVisit('event_fallback', samplePayload);
 
