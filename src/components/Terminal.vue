@@ -32,7 +32,7 @@
     <div v-if="showContactsButtons" class="contacts" aria-label="contact buttons">
       <a class="link-btn" :href="props.linkedinUrl" target="_blank" rel="noopener noreferrer" aria-label="Open LinkedIn">LinkedIn</a>
       <a class="link-btn" :href="props.githubUrl" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub">GitHub</a>
-      <a class="link-btn" href="/src/assets/CV.pdf" target="_blank" rel="noopener noreferrer" aria-label="Download CV">Download CV</a>
+      <a class="link-btn" :href="cvUrl" target="_blank" rel="noopener noreferrer" aria-label="Download CV">Download CV</a>
     </div>
   </section>
 
@@ -40,6 +40,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, type Ref, computed } from 'vue';
+import cvUrl from '../assets/CV.pdf';
 
 const props = defineProps<{
   linkedinUrl: string;

@@ -6,8 +6,8 @@
     </header>
 
     <section class="screenshot">
-      <a href="/src/assets/cookielab.console.png" target="_blank" rel="noopener noreferrer" aria-label="Open screenshot in a new tab">
-        <img src="/src/assets/cookielab.console.png" alt="screenshot of your console" class="screenshot-img" />
+      <a :href="screenshotUrl" target="_blank" rel="noopener noreferrer" aria-label="Open screenshot in a new tab">
+        <img :src="screenshotUrl" alt="screenshot of your console" class="screenshot-img" />
       </a>
       <figcaption class="caption">screenshot of your console</figcaption>
     </section>
@@ -37,6 +37,7 @@
 import Terminal from './components/Terminal.vue';
 import { ref, onMounted } from 'vue';
 import { trackVisit } from './composition/track';
+import screenshotUrl from './assets/cookielab.console.png';
 
 const LINKEDIN_URL = 'https://linkedin.com/in/lukas-houf';
 const GITHUB_URL = 'https://github.com/hoposon';
