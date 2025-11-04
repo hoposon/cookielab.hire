@@ -35,12 +35,11 @@
 
 <script setup lang="ts">
 import Terminal from './components/Terminal.vue';
-import { ref, onMounted } from 'vue';
-import { trackVisit } from './composition/track';
+import { ref } from 'vue';
 import screenshotUrl from './assets/cookielab.console.png';
 
 const LINKEDIN_URL = 'https://linkedin.com/in/lukas-houf';
-const GITHUB_URL = 'https://github.com/hoposon';
+const GITHUB_URL = 'https://github.com/hoposon?tab=repositories';
 const CONTACT_EMAIL = 'lukas.houf@gmail.com';
 const CONTACT_PHONE = '+420 777 054 608';
 
@@ -66,14 +65,6 @@ const copyPlainText = async (): Promise<void> => {
     copied.value = false;
   }
 }
-
-onMounted(() => {
-  trackVisit('page_view', {
-    path: window.location.pathname,
-    referrer: document.referrer || null,
-    userAgent: navigator.userAgent,
-  });
-});
 
 </script>
 
